@@ -33,6 +33,7 @@ io.on("connection", (socket) => {
         console.log(userData?._id);
         socket.join(userData?._id);
         socket.emit("connected");
+        socket.emit("status", userData?._id);
     });
 
     socket.on("join chat", (room) => {
