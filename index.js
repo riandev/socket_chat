@@ -27,7 +27,6 @@ io.use((socket, next) => {
     next();
 });
 io.on("connection", (socket) => {
-    console.log(socket?.origin);
     console.log("Connected to socket.io");
     socket.on("setup", (userData) => {
         console.log(userData?._id);
@@ -39,8 +38,11 @@ io.on("connection", (socket) => {
     socket.on("join chat", (room) => {
         socket.join(room);
         console.log("User Joined Room: " + room);
-        console.log("User Joined Room: " + room);
     });
+    socket.on("read", (message) => {
+        console.log("User Seen Message: " + message);
+        socket.broadcast.emit('read status', message);
+    })
     socket.on("typing", (room) => socket.in(room).emit("typing"));
     socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
 
