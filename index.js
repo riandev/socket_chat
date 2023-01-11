@@ -51,4 +51,9 @@ io.on("connection", (socket) => {
         console.log(sended);
         console.log(newMessageReceived);
     });
+
+    socket.on("new comment", (newComment) => {
+        console.log("New Comment", newComment);
+        socket.broadcast.emit('comment received', { status: true });
+    });
 });
